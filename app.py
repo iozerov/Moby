@@ -1,7 +1,7 @@
 # app.py
 
 import pandas as pd
-from dash import Dash, dcc, html, callback_context
+from dash import Dash, dcc, html, callback_context, dash_table
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -102,16 +102,16 @@ external_stylesheets = [
 ]
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
-app.title = "Avocado Analytics: Understand Your Avocados!"
+app.title = "Moby Analytics"
+
 
 app.layout = html.Div(
     children=[
         html.Div(
             children=[
-                html.P(children="🥑", className="header-emoji"),
-                html.H1(children="TEst Analytics", className="header-title"),
+                html.H1(children="Moby Analytics", className="header-title"),
                 html.P(
-                    children="Analyze the behavio",
+                    children="Analyze Establishment Specific Injury and Illness Data",
                     className="header-description",
                 ),
             ],
@@ -135,6 +135,7 @@ app.layout = html.Div(
                             className="dropdown",
                         ),
                     ],
+                    className="chart-label-small"
                 ),
                 html.Div(
                     children=[
@@ -153,6 +154,7 @@ app.layout = html.Div(
                             className="dropdown",
                         ),
                     ],
+                    className="chart-label-small"
                 ),
                 html.Div(
                     children=[
@@ -169,6 +171,7 @@ app.layout = html.Div(
                             className="dropdown",
                         ),
                     ],
+                    className="chart-label-small"
                 ),
                 html.Div(
                     children=[
@@ -185,27 +188,13 @@ app.layout = html.Div(
                             className="dropdown",
                         ),
                     ],
-                ),
-                html.Div(
-                    children=[
-                        html.Div(children="X label", className="menu-title"),
-                        dcc.Dropdown(
-                            id="x_label-filter",
-                            options=[
-                                {"label": state, "value": state}
-                                for state in list(QUANTITATIVE_VALUES.keys())
-                            ],
-                            value=list(QUANTITATIVE_VALUES.keys())[0],
-                            searchable=True,
-                            className="dropdown",
-                        ),
-                    ],
+                    className="chart-label-small"
                 ),
             ],
             className="menu-row-1",
         ),  # children=[]
         html.Div(
-            className="menu-row-2",
+            className="menu-row-1",
             children=[
                 html.Div(  ## HERE
                     children=[
@@ -222,6 +211,7 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                    className="range-item"
                 ),
                 html.Div(  ## HERE
                     children=[
@@ -236,6 +226,7 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                    className="range-item"
                 ),
                 html.Div(  ## HERE
                     children=[
@@ -252,6 +243,7 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                    className="range-item"
                 ),
                 html.Div(  ## HERE
                     children=[
@@ -270,26 +262,12 @@ app.layout = html.Div(
                             tooltip={"placement": "bottom", "always_visible": True},
                         ),
                     ],
-                ),
-                html.Div(
-                    children=[
-                        html.Div(children="Y label", className="menu-title"),
-                        dcc.Dropdown(
-                            id="y_label-filter",
-                            options=[
-                                {"label": state, "value": state}
-                                for state in list(QUANTITATIVE_VALUES.keys())
-                            ],
-                            value=list(QUANTITATIVE_VALUES.keys())[-1],
-                            searchable=True,
-                            className="dropdown",
-                        ),
-                    ],
+                    className="range-item"
                 ),
             ],
         ),
         html.Div(
-            className="menu-row-3",
+            className="menu-row-1",
             children=[
                 html.Div(  ## HERE
                     children=[
@@ -307,6 +285,7 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                    className="range-item"
                 ),
                 html.Div(  ## HERE
                     children=[
@@ -324,6 +303,7 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                    className="range-item"
                 ),
                 html.Div(  ## HERE
                     children=[
@@ -341,6 +321,7 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                    className="range-item"
                 ),
                 html.Div(  ## HERE
                     children=[
@@ -358,25 +339,81 @@ app.layout = html.Div(
                             ],
                         ),
                     ],
+                    className="range-item"
                 ),
-                html.Button("Download CSV", id="download-button", n_clicks=1),
-                dcc.Download(id="download-dataframe-csv"),
+            ],
+        ),
+        html.Div(
+            className="menu-row-1",
+            children=[
                 html.Div(
                     children=[
-                        html.Div(children="Colors", className="menu-title"),
+                        html.Div(children="X label", className="menu-title"),
                         dcc.Dropdown(
-                            id="colors-filter",
+                            id="x_label-filter",
                             options=[
                                 {"label": state, "value": state}
                                 for state in list(QUANTITATIVE_VALUES.keys())
                             ],
-                            value="State",
+                            value=list(QUANTITATIVE_VALUES.keys())[0],
                             searchable=True,
                             className="dropdown",
                         ),
                     ],
+                    className="chart-label"
+                ),
+                html.Div(
+                    children=[
+                        html.Div(children="Y label", className="menu-title"),
+                        dcc.Dropdown(
+                            id="y_label-filter",
+                            options=[
+                                {"label": state, "value": state}
+                                for state in list(QUANTITATIVE_VALUES.keys())
+                            ],
+                            value=list(QUANTITATIVE_VALUES.keys())[-1],
+                            searchable=True,
+                            className="dropdown",
+                        ),
+                    ],
+                    className="chart-label"
+                ),
+                # html.Div(
+                #     children=[
+                #         html.Div(children="Colors", className="menu-title"),
+                #         dcc.Dropdown(
+                #             id="colors-filter",
+                #             options=[
+                #                 {"label": state, "value": state}
+                #                 for state in list(QUANTITATIVE_VALUES.keys())
+                #             ],
+                #             value="State",
+                #             searchable=True,
+                #             className="dropdown",
+                #         ),
+                #     ],
+                # ),
+            ],
+        ),
+        html.Div(
+            children=[
+                dash_table.DataTable(
+                    id='moby-table',
+                    data=data.to_dict('records'),
+                    columns=[{'id': c, 'name': c} for c in data.columns],
+                    virtualization=True,
+                    fixed_rows={'headers': True},
+                    style_cell={'minWidth': 95, 'width': 120, 'maxWidth': 120},
                 ),
             ],
+            className="wrapper",
+        ),
+        html.Div(
+            children=[
+                html.Button("Download CSV", id="download-button", n_clicks=1),
+                dcc.Download(id="download-dataframe-csv"),
+            ],
+            className="wrapper",
         ),
         html.Div(
             children=[
@@ -449,8 +486,58 @@ def update_charts(
         t, x=QUANTITATIVE_VALUES[x_label], y=QUANTITATIVE_VALUES[y_label],
         color="state", log_x=True, size_max=100
     )
-
     return price_chart_figure
+
+
+@app.callback(
+    Output("moby-table", "data"),
+    [
+        Input("state-filter", "value"),
+        Input("year-filter", "value"),
+        Input("ownership-filter", "value"),
+        Input("naics-filter", "value"),
+        Input("days_away_from_work-filter", "value"),
+        Input("total_hours_worked-filter", "value"),
+        Input("annual_average_employees-filter", "value"),
+        Input(
+            "days_of_job_transfer_or_restriction-filter", "value"
+        ),
+        Input("total_deaths-filter", "value"),
+        Input("total_dafw_cases-filter", "value"),
+        Input("total_djtr_cases-filter", "value"),
+        Input("total_injuries-filter", "value"),
+    ],
+)
+def update_table(
+    state,
+    year,
+    ownership_type,
+    naics,
+    days_away_from_work,
+    total_hours_worked_range,
+    employee_number_range,
+    days_of_job_transfer_or_restriction,
+    total_deaths,
+    total_dafw_cases,
+    total_djtr_cases,
+    total_injuries,
+):
+    t = update_df(state,
+    year,
+    ownership_type,
+    naics,
+    days_away_from_work,
+    total_hours_worked_range,
+    employee_number_range,
+    days_of_job_transfer_or_restriction,
+    total_deaths,
+    total_dafw_cases,
+    total_djtr_cases,
+    total_injuries,)
+
+    records = t.to_dict('records')
+
+    return records
 
 
 @app.callback(
@@ -500,7 +587,7 @@ def download_csv(
     total_djtr_cases,
     total_injuries,)
 
-    return dcc.send_data_frame(t.to_csv, filename="some_name.csv")
+    return dcc.send_data_frame(t.to_csv, filename=f'{pd.to_datetime("today").strftime("%Y-%m-%d_%H-%M-%S")}.csv')
 
 
 def update_df(
@@ -558,8 +645,8 @@ def update_df(
     t = t[t["total_dafw_cases"].between(total_dafw_cases[0], total_dafw_cases[1])]
     t = t[t["total_djtr_cases"].between(total_djtr_cases[0], total_djtr_cases[1])]
     t = t[t["total_injuries"].between(total_injuries[0], total_injuries[1])]
-
     return t
 
 if __name__ == "__main__":
     app.run_server(debug=True, port=8060)
+
