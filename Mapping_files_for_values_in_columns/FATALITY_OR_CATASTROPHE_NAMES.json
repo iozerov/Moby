@@ -1,0 +1,26 @@
+{
+    "FATALITY": [
+        "Fatalities",
+        "Fatalities ",
+        "Fatality",
+        "Fatality (2)",
+        "fatality",
+        " Fatality",
+        "2 Fatalities"
+    ],
+    "CATASTROPHE": [
+        "3 Catastrophes",
+        "4 Catastrophes",
+        "5 Catastrophes",
+        "Catastrophe",
+        "Catastrophes"
+    ],
+    "BOTH": [
+        "3 Fatalites/1 Catastrophe",
+        "Fatality / Catastrophe",
+        "Fatality / Catastrophes",
+        "Fatality, Catastrophe",
+        "Fatality/Catastrophe",
+        "Fatality/Catastrophes"
+    ]
+}
