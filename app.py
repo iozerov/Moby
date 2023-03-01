@@ -372,6 +372,7 @@ app.layout = html.Div(
                             className="dropdown",
                         ),
                     ],
+                    className="chart-label"
                 ),
             ],
         ),
