@@ -96,3 +96,20 @@ button#download-button:hover {
     display: none;
     text-align: center;
 }
+
+.menu-row-1 {
+    height: 90px;
+}
+
+.range-item {
+    width: 30%;
+    text-align: center;
+}
+
+.chart-label {
+    width: 25%;
+}
+
+.chart-label-small {
+    width: 15%;
+}
