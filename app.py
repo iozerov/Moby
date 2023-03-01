@@ -1,26 +1,15 @@
 # app.py
 
 import pandas as pd
-from dash import Dash, dcc, html, callback_context
+from dash import Dash, dcc, html
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import urllib
 from dash.dependencies import Output, Input, State
 
-from constants import (
-    INSPECTION_DETAILS_FOLDER_NAME,
-    MAPPING_FILES_FOLDER_NAME,
-    ALL,
-    STATE_NAMES,
-    TWO_DIGIT_NAICS,
-)
+from constants import ALL, TWO_DIGIT_NAICS
 from helpers import get_naics_sector_numbers_by_names
-from scrapping_inspection_details import (
-    parse_inspection_file,
-    Inspection,
-    get_inspection_details_list,
-)
+
 
 FILE_NAMES_ENCODING = {
     #     'ITA Data CY 2016.zip': 'cp1252',
@@ -447,7 +436,7 @@ def update_charts(
 
     price_chart_figure = px.scatter(
         t, x=QUANTITATIVE_VALUES[x_label], y=QUANTITATIVE_VALUES[y_label],
-        color="state", log_x=True, size_max=100
+        color="state", log_x=True, size_max=100, hover_data=['company_name']
     )
 
     return price_chart_figure
