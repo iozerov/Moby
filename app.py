@@ -397,6 +397,17 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
+                html.Div(
+                    children=dcc.Graph(
+                        id="price-chart",
+                    ),
+                    className="card",
+                )
+            ],
+            className="wrapper",
+        ),
+        html.Div(
+            children=[
                 dash_table.DataTable(
                     id='moby-table',
                     data=data.to_dict('records'),
@@ -412,17 +423,6 @@ app.layout = html.Div(
             children=[
                 html.Button("Download CSV", id="download-button", n_clicks=1),
                 dcc.Download(id="download-dataframe-csv"),
-            ],
-            className="wrapper",
-        ),
-        html.Div(
-            children=[
-                html.Div(
-                    children=dcc.Graph(
-                        id="price-chart",
-                    ),
-                    className="card",
-                )
             ],
             className="wrapper",
         ),
