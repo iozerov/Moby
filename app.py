@@ -45,16 +45,6 @@ QUANTITATIVE_VALUES  = {
     "Cases with job transfer or restriction": "total_djtr_cases",
     "Number of injuries": "total_injuries",
 }
-QUANTITATIVE_VALUES  = {
-    "Days away from work": "total_dafw_days",
-    "Total hours worked": "total_hours_worked",
-    "Annual average employees": "annual_average_employees",
-    "Days of job transfer or restriction": "total_djtr_days",
-    "Total Deaths": "total_deaths",
-    "Cases with days away from work": "total_dafw_cases",
-    "Cases with job transfer or restriction": "total_djtr_cases",
-    "Number of injuries": "total_injuries",
-}
 
 data = pd.concat(
     list(
@@ -482,10 +472,13 @@ def update_charts(
     total_djtr_cases,
     total_injuries,)
 
+
     price_chart_figure = px.scatter(
         t, x=QUANTITATIVE_VALUES[x_label], y=QUANTITATIVE_VALUES[y_label],
         color="state", log_x=True, size_max=100
-    )
+    ).update_layout(
+    xaxis_title=x_label, yaxis_title=y_label
+)
     return price_chart_figure
 
 
