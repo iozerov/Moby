@@ -368,21 +368,21 @@ app.layout = html.Div(
                     ],
                     className="chart-label"
                 ),
-                # html.Div(
-                #     children=[
-                #         html.Div(children="Colors", className="menu-title"),
-                #         dcc.Dropdown(
-                #             id="colors-filter",
-                #             options=[
-                #                 {"label": state, "value": state}
-                #                 for state in list(QUANTITATIVE_VALUES.keys())
-                #             ],
-                #             value="State",
-                #             searchable=True,
-                #             className="dropdown",
-                #         ),
-                #     ],
-                # ),
+                html.Div(
+                    children=[
+                        html.Div(children="Colors", className="menu-title"),
+                        dcc.Dropdown(
+                            id="colors-filter",
+                            options=[
+                                {"label": state, "value": state}
+                                for state in list(QUANTITATIVE_VALUES.keys())
+                            ],
+                            value="State",
+                            searchable=True,
+                            className="dropdown",
+                        ),
+                    ],
+                ),
             ],
         ),
         html.Div(
